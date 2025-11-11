@@ -6,7 +6,7 @@ from transformers import pipeline
 
 class SentimentAnalyzer:
     def __init__(self, sentiment_model_name , speech_model_name):
-        print("🔄 Đang tải models...")
+        print(" Đang tải models...")
 
         try:
             self.sentiment_tokenizer = AutoTokenizer.from_pretrained(sentiment_model_name)
@@ -15,9 +15,9 @@ class SentimentAnalyzer:
 
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             self.sentiment_model.to(self.device)
-            print(f"✅ PhoBERT sentiment model đã tải thành công! (Device: {self.device})")
+            print(f" PhoBERT sentiment model đã tải thành công! (Device: {self.device})")
         except Exception as e:
-            print(f"❌ Lỗi khi tải PhoBERT model: {e}")
+            print(f" Lỗi khi tải PhoBERT model: {e}")
             self.sentiment_model = None
             self.sentiment_tokenizer = None
 
@@ -27,9 +27,9 @@ class SentimentAnalyzer:
                 model=speech_model_name,
                 device=0 if torch.cuda.is_available() else -1  # 0 for GPU, -1 for CPU
             )
-            print(f"✅ PhoWhisper model đã tải thành công!")
+            print(f" PhoWhisper model đã tải thành công!")
         except Exception as e:
-            print(f"❌ Lỗi khi tải PhoWhisper model: {e}")
+            print(f" Lỗi khi tải PhoWhisper model: {e}")
             self.speech_pipeline = None
 
     def predict_sentiment_from_text(self, text):
@@ -37,7 +37,7 @@ class SentimentAnalyzer:
             return "Vui lòng nhập văn bản!", {}
 
         if self.sentiment_model is None or self.sentiment_tokenizer is None:
-            return "❌ Model chưa được tải!", {}
+            return " Model chưa được tải!", {}
 
         try:
 
@@ -71,14 +71,14 @@ class SentimentAnalyzer:
             return result_text, prob_dict
 
         except Exception as e:
-            return f"❌ Lỗi khi dự đoán: {str(e)}", {}
+            return f" Lỗi khi dự đoán: {str(e)}", {}
 
     def speech_to_text(self, audio_path):
         if audio_path is None:
             return "Vui lòng tải lên file audio!"
 
         if self.speech_pipeline is None:
-            return "❌ PhoWhisper model chưa được tải!"
+            return " PhoWhisper model chưa được tải!"
 
         try:
             result = self.speech_pipeline(audio_path)
@@ -110,7 +110,7 @@ SENTIMENT_MODEL_NAME =  "KPN14/phobert_sentiment"
 SPEECH_MODEL_NAME = "vinai/PhoWhisper-large"
 
 
-print("🚀 Đang khởi động ứng dụng...")
+print(" Đang khởi động ứng dụng...")
 analyzer = SentimentAnalyzer(
     sentiment_model_name=SENTIMENT_MODEL_NAME,
     speech_model_name=SPEECH_MODEL_NAME
