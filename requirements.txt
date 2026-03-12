@@ -1,4 +1,11 @@
-gradio>=4.0.0
-torch>=2.0.0
-transformers>=4.30.0
-numpy>=1.24.0
+fastapi
+uvicorn
+gradio>=4.0
+pydantic>=2.0
+pydantic-settings
+python-dotenv
+python-multipart
+pytest
+torch
+transformers
+numpy
